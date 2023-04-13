@@ -9,9 +9,9 @@ services:
       --providers.docker.exposedByDefault=false
       --entrypoints.web.address=:80
       --entrypoints.websecure.address=:443
-      --certificatesresolvers.myresolver.acme.email=${ACME_EMAIL}
-      --certificatesresolvers.myresolver.acme.storage=${ACME_STORAGE_PATH}
-      --certificatesresolvers.myresolver.acme.tlschallenge=true
+      --certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL}
+      --certificatesresolvers.letsencrypt.acme.storage=${ACME_STORAGE_PATH}
+      --certificatesresolvers.letsencrypt.acme.tlschallenge=true
     ports:
       - "80:80"
       - "443:443"
