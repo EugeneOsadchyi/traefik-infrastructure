@@ -3,12 +3,22 @@ version: '3.9'
 services:
   reverse-proxy:
     image: traefik:v2.9
+    container_name: traefik
     command: >
       --providers.docker
+      --providers.docker.exposedByDefault=false
+      --entrypoints.web.address=:80
+      --entrypoints.websecure.address=:443
+      --certificatesresolvers.myresolver.acme.email=${ACME_EMAIL}
+      --certificatesresolvers.myresolver.acme.storage=${ACME_STORAGE_PATH}
+      --certificatesresolvers.myresolver.acme.tlschallenge=true
     ports:
       - "80:80"
+      - "443:443"
+      - "8080:8080"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./letsencrypt:/letsencrypt
 
 networks:
   default:
